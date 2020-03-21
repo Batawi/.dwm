@@ -64,12 +64,21 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *brightnessup[] = { "xbacklight", "-inc", "10", NULL };
 static const char *brightnessdown[] = { "xbacklight", "-dec", "10", NULL };
 
+static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%",     NULL };
+static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%",     NULL };
+static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "@DEFAULT_SINK@", "toggle",  NULL };
+static const char *mutemic[] = { "/usr/bin/pactl", "set-source-mute",   "1", "toggle",  NULL };
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
     { 0,               XF86XK_MonBrightnessUp, spawn,          {.v = brightnessup } },
     { 0,             XF86XK_MonBrightnessDown, spawn,          {.v = brightnessdown } },
+    { 0,              XF86XK_AudioLowerVolume, spawn,          {.v = downvol } },
+	{ 0,                     XF86XK_AudioMute, spawn,          {.v = mutevol } },
+	{ 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol   } },
+	{ 0,              XF86XK_AudioMicMute,        spawn,          {.v = mutemic   } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
